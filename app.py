@@ -37,6 +37,10 @@ from cache_manager_20250531_230000_0_0_1_1 import get_cache_manager
 from styles import styles_gallery
 from image_utils import universal_saver
 
+# API COMPATIBILITY
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from api_formats import standardize_segment_output, standardize_error_response, parse_worker3_database_input
+
 app = Flask(__name__)
 
 # Configuration

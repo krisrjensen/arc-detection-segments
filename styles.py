@@ -14,30 +14,40 @@ class StylesGallery:
     """Centralized styling system for consistent visualization across services"""
     
     def __init__(self):
+        # UNIVERSAL COLOR PALETTE - Demo Standards
         self.color_schemes = {
             'default': {
-                'before': 'green',
-                'during': 'red', 
-                'after': 'blue',
-                'background': 'white',
-                'grid': 'lightgray',
-                'text': 'black'
+                'primary': '#1f77b4',      # Universal primary blue
+                'before': '#2ca02c',       # Universal green
+                'during': '#d62728',       # Universal red
+                'after': '#1f77b4',        # Universal blue
+                'background': '#ffffff',    # Universal white background
+                'grid': '#f0f0f0',         # Universal light gray
+                'text': '#333333',         # Universal dark gray text
+                'secondary': '#ff7f0e',    # Universal orange
+                'accent': '#9467bd'        # Universal purple
             },
             'publication': {
-                'before': '#2E8B57',  # Sea green
-                'during': '#DC143C',  # Crimson
-                'after': '#4682B4',   # Steel blue
-                'background': 'white',
-                'grid': '#F0F0F0',
-                'text': '#333333'
+                'primary': '#1f77b4',
+                'before': '#2ca02c',
+                'during': '#d62728', 
+                'after': '#1f77b4',
+                'background': '#ffffff',
+                'grid': '#f8f9fa',
+                'text': '#212529',
+                'secondary': '#ff7f0e',
+                'accent': '#9467bd'
             },
             'presentation': {
-                'before': '#228B22',  # Forest green
-                'during': '#FF4500',  # Orange red
-                'after': '#1E90FF',   # Dodger blue
-                'background': '#FAFAFA',
-                'grid': '#E0E0E0',
-                'text': '#2F2F2F'
+                'primary': '#1f77b4',
+                'before': '#2ca02c',
+                'during': '#d62728',
+                'after': '#1f77b4',
+                'background': '#ffffff',
+                'grid': '#e9ecef',
+                'text': '#495057',
+                'secondary': '#ff7f0e',
+                'accent': '#9467bd'
             }
         }
         
@@ -69,23 +79,43 @@ class StylesGallery:
         }
     
     def apply_style(self, style_name='default'):
-        """Apply style to matplotlib"""
+        """Apply universal demo-ready style to matplotlib"""
         if style_name not in self.plot_styles:
             style_name = 'default'
             
         style = self.plot_styles[style_name]
+        colors = self.color_schemes[style_name]
         
+        # UNIVERSAL DEMO STYLING
         plt.rcParams.update({
             'figure.figsize': style['figure_size'],
             'figure.dpi': style['dpi'],
+            'figure.facecolor': colors['background'],
+            'axes.facecolor': colors['background'],
+            'axes.edgecolor': colors['text'],
+            'axes.labelcolor': colors['text'],
+            'axes.grid': True,
+            'grid.color': colors['grid'],
+            'grid.alpha': style['grid_alpha'],
             'lines.linewidth': style['line_width'],
             'font.size': style['font_size'],
+            'font.family': 'sans-serif',
+            'font.sans-serif': ['Arial', 'DejaVu Sans', 'Liberation Sans', 'sans-serif'],
             'axes.titlesize': style['title_size'],
             'axes.labelsize': style['font_size'],
             'xtick.labelsize': style['font_size'] - 1,
             'ytick.labelsize': style['font_size'] - 1,
+            'xtick.color': colors['text'],
+            'ytick.color': colors['text'],
             'legend.fontsize': style['font_size'] - 1,
-            'figure.titlesize': style['title_size'] + 2
+            'legend.frameon': True,
+            'legend.fancybox': True,
+            'legend.shadow': True,
+            'figure.titlesize': style['title_size'] + 2,
+            'axes.prop_cycle': plt.cycler('color', [
+                colors['primary'], colors['secondary'], colors['accent'],
+                colors['before'], colors['during'], colors['after']
+            ])
         })
     
     def get_colors(self, style_name='default'):
